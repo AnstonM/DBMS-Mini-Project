@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.25">
+
+    <title> InterCity Taxi Booking</title>
+    
+    <link rel="icon" href="images/icon.jpg" type="image/icon type">
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.css')}}">        
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/Login.css')}}">
+
+    <link href='https://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css' rel='stylesheet'>
+    
+  </head>
+
+
+  <body>  
+    <header>
+      <nav id="header-nav" class="navbar navbar-menuButtonefault">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="navbar-brand">
+                    <a> <img src="{{url_for('static',filename='images/logo.jpg')}}" align="left" /></a>                           
+                </div>
+              </div>
+          <!-- .collapse .navbar-collapse -->
+                
+            <ul id="nav-list2" class="nav navbar-nav mininav">
+                      <li id="Createbutton" class = "smenuButton "><a href="/CreateAccount"class="fa fa-check-circle"> Create Account</a></li>
+                      <li class="divider">|&emsp;</li>
+                      <li id="Adminbutton" class = " smenuButton "><a href="/AdminLogin"class="fa fa-cogs"> Admin SignIn</a></li>              
+            </ul><!-- #nav-list -->
+ 
+                     
+
+        </div><!-- .container -->         
+      </nav><!-- #header-nav -->
+    </header>
+
+
+ 
+<div class="container-fluid">   
+  
+  <div id="myCarousel2" class="carousel slide float-left col-lg-7" data-ride="carousel" data-interval="5000" data-touch="true">
+  <div class="carousel-inner">
+      <div class="item-tile item active">
+          <div id="banner1" alt="course1" > <img src="{{url_for('static',filename='images/banner3.jpg')}}" height=450px width=1200px /></div>   
+      </div>
+      <div class="item-tile item">
+          
+      </div>  
+  </div>
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+      <!--<li data-target="#myCarousel" data-slide-to="3"></li>
+        <li data-target="#myCarousel" data-slide-to="4"></li>
+        <li data-target="#myCarousel" data-slide-to="5"></li>
+        <li data-target="#myCarousel" data-slide-to="6"></li>
+    -->
+  </ol>
+    
+  </div>
+  <div class="col-lg-5 filler2">
+    <div>
+       <h2 class="title">CUSTOMER SIGN IN </h2>
+       <br>
+
+    <form action="{{ url_for('login') }}" method="POST" autocomplete="off" >
+      {{ form.csrf_token }}
+      <fieldset class="form-field">
+      {{ form.username.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{ form.username }}        
+      </fieldset>
+      <br>
+      <fieldset class="form-field">
+         {{ form.password.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {{ form.password }}
+        <br>
+        <input id="show" type="checkbox" onclick="myFunction()"><span>&nbsp;&nbsp;Show Password</span>
+        {% if form.password.errors or form.username.errors %}
+          <ul class="errors">
+          {% for error in form.username.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+            {% for error in form.password.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </fieldset>     
+
+      {{ form.submit }}
+
+      </form>
+    </div>
+  </div>
+</div>
+
+
+    <!--jQuery (Bootstrap JS plugins depend on it)-->
+
+    <script src= "{{ url_for('static',filename='js/jquery-2.1.4.min.js')}}"></script>
+    <script src= "{{ url_for('static',filename='js/bootstrap.min.js')}}"></script>
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+    <script type="text/javascript">function myFunction() {
+  var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}</script>
+
+
+  <footer>
+    <div>
+      <div><span class="filler1">Contact Us : 0824-123456/66/76  |   +91 1234567890 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Email us : dbmsminiproject@cabs.org<span></div>
+      <div id="play1" class=""> <img src="{{url_for('static',filename='images/play1.jpg')}}" align="right" /></div>
+      <div id="play2" class=""> <img src="{{url_for('static',filename='images/play2.jpg')}}" align="right" /></div>
+    </div>
+  </footer>
+</body>
+
+</html>

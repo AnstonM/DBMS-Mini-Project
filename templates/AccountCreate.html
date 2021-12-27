@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.25">
+
+    <title> InterCity Taxi Booking</title>
+    
+    <link rel="icon" href="images/icon.jpg" type="image/icon type">
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.css')}}">        
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/Login.css')}}">
+
+    <link href='https://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css' rel='stylesheet'>
+    
+  </head>
+
+
+  <body>  
+    <header>
+      <nav id="header-nav" class="navbar navbar-menuButtonefault">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="navbar-brand">
+                    <a> <img src="{{url_for('static',filename='images/logo.jpg')}}" align="left" /></a>                           
+                </div>
+              </div>
+          <!-- .collapse .navbar-collapse -->
+                
+            <ul id="nav-list2" class="nav navbar-nav mininav">
+                      <li id="Adminbutton" class = " smenuButton "><a href="/login" class="fa fa-user"> SignIn Page</a></li>              
+            </ul><!-- #nav-list -->
+ 
+                     
+
+        </div><!-- .container -->         
+      </nav><!-- #header-nav -->
+    </header>
+
+
+ 
+<div class="container-fluid">
+
+  <div class="col-lg-1"></div>
+
+  <div class="col-lg-10 filler2 filler3">
+    <h2 class="title"> CREATE NEW ACCOUNT </h2>
+    <form action="{{ url_for('CreateAccount') }}" method="POST" autocomplete="off" >
+    {{ form.csrf_token }}
+    <div class="col-lg-6">       
+       <br>          
+      <fieldset class="form-field">
+      {{ form.firstname.label }}<font color = red>*</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{ form.firstname }}         
+      {% if form.firstname.errors %}
+      <ul class="errors">
+          {% for error in form.firstname.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      </fieldset>
+      <br> 
+      <fieldset class="form-field">
+      {{ form.lastname.label }}<font color = red>*</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{ form.lastname }}         
+      {% if form.lastname.errors %}
+      <ul class="errors">
+          {% for error in form.lastname.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      </fieldset>  
+      <br>
+      <fieldset class="form-field">
+      {{ form.phone.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{ form.phone }}         
+      {% if form.phone.errors %}
+      <ul class="errors">
+          {% for error in form.phone.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      </fieldset>
+      <br>
+      <fieldset class="form-field">
+      {{ form.email.label }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{ form.email }}         
+      {% if form.email.errors %}
+      <ul class="errors">
+          {% for error in form.email.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      </fieldset>
+      
+    </div>
+    <div class="col-lg-6">
+      <br>
+      <fieldset class="form-field">
+      &emsp;&emsp;&emsp;&emsp;{{ form.username.label }}<font color = red>*</font>&emsp;&ensp;
+      {{ form.username }}        
+      {% if form.username.errors %}
+      <ul class="errors">
+          {% for error in form.username.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      </fieldset>
+      <br>
+      <fieldset class="form-field">
+      &emsp;&emsp;&emsp;&emsp;{{ form.password.label }}<font color = red>*</font>&emsp;&ensp;&ensp;
+      {{ form.password }}         
+      {% if form.password.errors %}
+      <ul class="errors">
+          {% for error in form.password.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      </fieldset>
+      <br>
+      <fieldset class="form-field">
+      {{ form.confirmpassword.label }}<font color = red>*</font>&emsp;&ensp;&ensp;
+      {{ form.confirmpassword }} 
+      <br>
+      <input id="show" type="checkbox" onclick="myFunction()"><span>&nbsp;&nbsp;Show Password</span>        
+      {% if form.confirmpassword.errors %}
+      <ul class="errors">
+          {% for error in form.confirmpassword.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      </fieldset>
+      <br><br><br><br><br>
+      {{ form.submit }}
+    </div>
+  </form>
+  </div>
+  <div class="col-lg-1"></div>
+</div>
+
+
+    <!--jQuery (Bootstrap JS plugins depend on it)-->
+
+    <script src= "{{ url_for('static',filename='js/jquery-2.1.4.min.js')}}"></script>
+    <script src= "{{ url_for('static',filename='js/bootstrap.min.js')}}"></script>
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+    <script type="text/javascript">function myFunction() {
+  var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+  var x = document.getElementById("confirmpassword");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}</script>
+
+
+  <footer>
+    <div>
+      <div><span class="filler1">Contact Us : 0824-123456/66/76  |   +91 1234567890 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Email us : dbmsminiproject@cabs.org<span></div>
+      <div id="play1" class=""> <img src="{{url_for('static',filename='images/play1.jpg')}}" align="right" /></div>
+      <div id="play2" class=""> <img src="{{url_for('static',filename='images/play2.jpg')}}" align="right" /></div>
+    </div>
+  </footer>
+</body>
+
+</html>
