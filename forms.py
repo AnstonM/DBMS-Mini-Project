@@ -199,21 +199,21 @@ class CustomerForm(FlaskForm):
 
 
 
-class CreateAdminForm(FlaskForm):
+class AddAdminForm(FlaskForm):
 
     def validname(form,field):
         if not field.data.isalpha():
             raise ValidationError('Name should contain alphabets only !!!') 
     
-    def username_nottaken(form,field):
+    def username_nottaken1(form,field):
         con = sqlite3.connect("DBMS.db")
         print("Database successfully opened")
         cur = con.cursor()
-        cur.execute("Select * from customer")
+        cur.execute("Select * from admin")
         rows = cur.fetchall()
         count = 0
         for rowdata in rows: 
-            if field.data == rowdata[1]:
+            if field.data == rowdata[2]:
                 raise ValidationError(message='UserName is Taken !!!')
         con.close()
         
@@ -231,29 +231,11 @@ class CreateAdminForm(FlaskForm):
             count += 1
         if count != 2:
             raise ValidationError(message='>= 8 characters, must contain \nA-Z or a-Z ,0-9 ,\na special character( !,@,#,$,%,^,&,* )')
-    
-    def valid_email(form,field):
-        regex = re.compile(r'''(
-            [a-zA-Z0-9._%+-]+
-            @
-            [a-zA-Z0-9.-]+
-            (\.[a-zA-Z]{2,4})
-            )''',re.VERBOSE
-        )
-        list = regex.findall(field.data)
-        if list == []:
-            raise ValidationError(message='Invalid Email')
-
-
-
-            
+              
         
 
-    firstname = StringField('First Name',[DataRequired(),validname])
-    lastname = StringField('Last Name',[DataRequired(),validname])
-    phone = StringField('Phone No',[valid_phone])
-    email = EmailField('Email',[valid_email])
-    username = StringField('User Name',[DataRequired(),username_nottaken])
+    name = StringField('Full Name',[DataRequired(),validname])
+    username = StringField('User Name',[DataRequired(),username_nottaken1])
     password = PasswordField('Password',[DataRequired(),valid_pass])
     confirmpassword = PasswordField('Confirm\nPassword',[DataRequired(),EqualTo('password',message="Password doesn't match")])
     submit = SubmitField(label='CREATE ACCOUNT')

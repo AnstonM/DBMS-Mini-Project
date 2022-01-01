@@ -2,6 +2,7 @@ from flask import *
 import sqlite3
 import os
 from forms import *
+from flask import flash 
 
 
 
@@ -48,22 +49,15 @@ def CreateAccount():
 @app.route('/AddAdmin', methods=("GET","POST"))
 def AddAdmin():
     global userid
-    form = CreateCustomerForm()
+    form = AddAdminForm()
     if form.validate_on_submit():
         f = request.form
-        name = f['firstname']+' '+f['lastname']
-        phone = f['phone']
-        if phone == '':
-            phone = 'NULL'
-        email = f['email']
-        if email == '':
-            email = 'NULL'
+        name = f['name']
         username = f['username']
         password = f['password']
-        confirmpassword = f['confirmpassword']
         con = sqlite3.connect("DBMS.db")
         cur = con.cursor()
-        query = "INSERT INTO CUSTOMER(USERNAME,PWD,NAME,PH_NO,EMAIL) VALUES('"+username+"','"+password+"','"+name+"','"+phone+"','"+email+"')"
+        query = "INSERT INTO ADMIN(ANAME,AUSERNAME,APWD) VALUES('"+name+"','"+username+"','"+password+"')"
         cur.execute(query)
         con.commit()
         con.close()
@@ -85,7 +79,8 @@ def login():
         for rowdata in rows: 
             if rowdata[1]==userid:
                 userid=int(rowdata[0])        
-        con.close()
+        con.close() 
+        flash("Successfully Logged In")
         return redirect(url_for('index'))        
     else:       
         return render_template('login.html',form=form)

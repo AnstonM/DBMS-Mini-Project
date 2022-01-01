@@ -15,7 +15,7 @@
 {% block content %}
 <div class="container-fluid" id="container1"> 
   <div class="col-3" id="login">
-       <h2 class="title">CUSTOMER SIGN IN </h2>
+       <h3 class="title">CUSTOMER SIGN IN </h3>
        <br>
        <style>
         #username{border:2px white solid;}
@@ -39,7 +39,7 @@
       <br>
       <fieldset class="form-field">
         {{ form.password.label }}<br>
-        {{ form.password }}&nbsp;&nbsp;
+        {{ form.password }}<br>
         <input id="show" type="checkbox" onclick="myFunction()"><span>&nbsp;&nbsp;Show Password</span>
         {% if form.password.errors%}
           {% for error in form.password.errors %}
@@ -135,5 +135,7 @@ Simply scan the QR code in the Cabs for easy UPI payments.</p>
     x.type = "password";
   }
 }</script>
+
+
 
   {% endblock %}

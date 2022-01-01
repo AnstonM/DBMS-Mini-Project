@@ -1,6 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 
+
+  
+{% with messages = get_flashed_messages() %}  
+  {% if messages %}           
+    {% for message in messages %} 
+      <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        {{ message }}
+      </div>  
+    {% endfor %}  
+  {% endif %}  
+{% endwith %} 
+
+
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -96,4 +110,5 @@ Simply scan the QR code in the Cabs for easy UPI payments.</p>
      padding-left: 20%;border-top-right-radius: 50px;border-bottom-right-radius: 50px; width: 80%;height: 100px;
      border: 2px #212529 solid; border-left: 0px;margin-bottom: 60px;margin-top: 50px; font-size: 3em;font-style: italic;} 
 </style>
+
 {% endblock %}

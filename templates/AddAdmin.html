@@ -10,49 +10,85 @@
 
 {% block content %}
 <div class="container-fluid" id="container1"> 
-  <div class="col-3" id="login">
-       <h2 class="title">ADMIN SIGN IN </h2>
+  <div class="col-6" id="login">
+       <h2 class="title">CREATE NEW ADMIN</h2>
        <br>
        <style>
         #username{border:2px white solid;}
         .errors{color: red;}
       </style>
-    <form action="{{ url_for('Adminlogin') }}" method="POST" autocomplete="off" >
+    <form action="{{ url_for('AddAdmin') }}" method="POST" autocomplete="off" >
       {{ form.csrf_token }}
-      <fieldset class="form-field">
-      {{ form.username.label }}<br>
-      {{ form.username }}        
-      </fieldset>
-      {% if form.username.errors%}
-          {% for error in form.username.errors %}
-            <div class="errors">&nbsp;{{ error }}</div>
-            <style>
-              #username{border:2px red solid;}
-              .errors{color: rgba(255, 0, 0, 0.781);}
-            </style> 
-          {% endfor %}
-          {% endif %}
-      <br>
-      <fieldset class="form-field">
-        {{ form.password.label }}<br>
-        {{ form.password }}&nbsp;&nbsp;
-        <input id="show" type="checkbox" onclick="myFunction()"><span>&nbsp;&nbsp;Show Password</span>
-        {% if form.password.errors%}
-          {% for error in form.password.errors %}
-            <div class="errors">&nbsp;{{ error }}</div>
-            <style>
-              #password{border:2px red solid;}
-              .errors{color: rgba(255, 0, 0, 0.781);}
-            </style> 
-          {% endfor %}
-        {% endif %}
-      </fieldset>     
-      <br><br>
-      {{ form.submit }}
+    <div class="row">
+        <div class="col-6">
+          <fieldset class="form-field">
+          {{ form.username.label }}<br>
+          {{ form.username }}           
+          {% if form.username.errors%}
+              {% for error in form.username.errors %}
+                <div class="errors">&nbsp;{{ error }}</div>
+                <style>
+                  #username{border:2px red solid;}
+                  .errors{color: rgba(255, 0, 0, 0.781);}
+                </style> 
+              {% endfor %}
+              {% endif %}
+            </fieldset>
+          <br>
+          <fieldset class="form-field">
+            {{ form.password.label }}<br>
+            {{ form.password }}<br>
+            <input id="show" type="checkbox" onclick="myFunction()"><span>&nbsp;&nbsp;Show Password</span>
+            {% if form.password.errors%}
+              {% for error in form.password.errors %}
+                <div class="errors">&nbsp;{{ error }}</div>
+                <style>
+                  #password{border:2px red solid;}
+                  .errors{color: rgba(255, 0, 0, 0.781);}
+                </style> 
+              {% endfor %}
+            {% endif %}
+          </fieldset>
+          
+        </div>
+        <div class="col-6">
+          <fieldset class="form-field">
+            {{ form.name.label }}<br>
+            {{ form.name }}        
+            </fieldset>
+            {% if form.name.errors%}
+                {% for error in form.name.errors %}
+                  <div class="errors">&nbsp;{{ error }}</div>
+                  <style>
+                    #name{border:2px red solid;}
+                    .errors{color: rgba(255, 0, 0, 0.781);}
+                  </style> 
+                {% endfor %}
+                {% endif %}
+            <br>
 
-      </form>
+            <fieldset class="form-field">
+              {{ form.confirmpassword.label }}<br>
+              {{ form.confirmpassword }}             
+              {% if form.confirmpassword.errors%}
+                {% for error in form.confirmpassword.errors %}
+                  <div class="errors">&nbsp;{{ error }}</div>
+                  <style>
+                    #confirmpassword{border:2px red solid;}
+                    .errors{color: rgba(255, 0, 0, 0.781);}
+                  </style> 
+                {% endfor %}
+              {% endif %}
+            </fieldset> 
+
+            
+            <br> 
+            {{ form.submit }}
+            </div>      
+    </div>
+    </form>
   </div>
-  <div id="carouselFade" class="col-9 carousel slide carousel-fade" data-bs-ride="carousel" >
+  <div id="carouselFade" class="col-6 carousel slide carousel-fade" data-bs-ride="carousel" >
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -79,7 +115,7 @@
   .carousel-inner{height: 410px !important;width: 100%;border-top: 10px #212529 solid;}
   .carousel-inner{background-color: #212529;}
   .carousel-item img{border-radius: 200px; height: 390px;}
-  #container1{margin-top: 20PX;padding: 0%; margin-bottom: 200px;}
+  #container1{margin-top: 20PX;padding: 0%; margin-bottom: 200px; background-color:#212529}
   .carousel{clear: none;float: left; margin-bottom: 100px;}
   input{border-radius: 8px;font-size: 1.2em;}
   #login{float: left; padding-left: 30px;padding-top: 30px;background-color: #212529;color: white;height: 410px;}
@@ -94,6 +130,12 @@
 
 <script type="text/javascript">function myFunction() {
   var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+  var x = document.getElementById("confirmpassword");
   if (x.type === "password") {
     x.type = "text";
   } else {
