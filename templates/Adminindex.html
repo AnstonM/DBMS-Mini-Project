@@ -1,73 +1,28 @@
-<!doctype html>
-<html lang="en">
-
-
-  <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-
-    <title> InterCity Taxi Booking</title>
-    
-    <link rel="icon" href="images/icon.jpg" type="image/icon type">
-    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.css')}}">        
-    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/Base.css')}}">
-
-    <link href='https://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css' rel='stylesheet'>
-    
-  </head>
-
-
-  <body>  
-    <header>
-      <nav id="header-nav" class="navbar navbar-menuButtonefault">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <div class="navbar-brand">
-                    <a href="/index"> <img src="{{url_for('static',filename='images/logo.jpg')}}" align="left" /></a>                           
-                </div>
-              </div>
-          <!-- .collapse .navbar-collapse -->
-                
-            <ul id="nav-list2" class="nav navbar-nav mininav">
-                      <li id="Accountbutton" class = "smenuButton "><a href="#"class="fa fa-user"></a></li>
-                      <li class="divider">|</li>
-                      <li id="LogOutbutton" class = " smenuButton "><a href="/AdminLogin"class="fa fa-power-off"></a></li>              
-            </ul><!-- #nav-list -->  
-            <ul id="nav-list" class="nav navbar-nav ">
-                      <li id="Homebutton" class="menuButton"><a href="#" class=""> HOME </a></li>
-                      <li class="divider2">|</li> 
-                      <li id="Bookbutton" class = "menuButton "><a href="#" class=""> MANAGE CABS </a></li>
-                      <li class="divider2">|</li>
-                      <li id="Managebutton" class = "menuButton "><a href="#" class=""> MANAGE ROUTES </a></li>
-                      <li class="divider2">|</li>
-                      <li id="Contactbutton" class = "menuButton "><a href="#" class=""> ADD NEW ADMIN </a></li>
-                      <li class="divider2">|</li>
-                      <li id="Aboutbutton" class = "menuButton "><a href="#" class=""> MANAGE DRIVERS </a></li>             
-            </ul><!-- #nav-list -->  
-                     
-            
-        </div><!-- .container --> 
-      </nav><!-- #header-nav -->
-    </header>    
-
-
-    <!--jQuery (Bootstrap JS plugins depend on it)-->
-
-    <script src= "{{ url_for('static',filename='js/jquery-2.1.4.min.js')}}"></script>
-    <script src= "{{ url_for('static',filename='js/bootstrap.min.js')}}"></script>
-
- 
-  <footer>
-    <div>
-      <div><span class="filler1">Contact Us : 0824-123456/66/76  |   +91 1234567890 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Email us : dbmsminiproject@cabs.org<span></div>
-      <div id="play1" class=""> <img src="{{url_for('static',filename='images/play1.jpg')}}" align="right" /></div>
-      <div id="play2" class=""> <img src="{{url_for('static',filename='images/play2.jpg')}}" align="right" /></div>
+{% extends "AdminBase.html" %}
+{% block content %}
+<div id="carouselFade" class="carousel slide carousel float-left" data-bs-ride="carousel" ="">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{{url_for('static',filename='images/banner6.jpg')}}" class="d-block w-100" height="400px" >
+      </div>
+      <div class="carousel-item">
+        <img src="{{url_for('static',filename='images/banner4.jpg')}}" class="d-block w-100" height="400px">
+      </div>
+      <div class="carousel-item">
+        <img src="{{url_for('static',filename='images/banner5.jpg')}}" class="d-block w-100" height="400px">
+      </div>
+      <div class="carousel-item">
+        <img src="{{url_for('static',filename='images/banner4.jpg')}}" class="d-block w-100" height="400px">
+      </div>
     </div>
-  </footer>
-  </body>
-
-</html>
+  </div>
+<style>
+    .carousel-inner{height: 400px !important;margin-top: 50px;border-top: 5px black solid;border-bottom: 5px black solid;}
+</style>
+{% endblock %}

@@ -8,7 +8,6 @@
          rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" 
          crossorigin="anonymous">
         <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css' rel='stylesheet'>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
         <title>{% block title %}{% endblock %}</title>
         {% block head %}{% endblock %}
     </head>
@@ -24,33 +23,41 @@
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Book Now</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">My Bookings</a>
-                  </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       My Account
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
-                      <li><a class="dropdown-item" href="#">Edit Profile</a></li>
                       <li><a class="dropdown-item" href="#">Change Password</a></li>
+                      <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+                      <li><a class="dropdown-item" href="#">Delete Account</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/AddAdmin">Add Admins</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Manage Routes
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+                      <li><a class="dropdown-item" href="#">View All Routes</a></li>
+                      <li><a class="dropdown-item" href="#">Add Routes</a></li>
+                      <li><a class="dropdown-item" href="#">Remove Routes</a></li>
                     </ul>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      About Us
+                      Manage Drivers
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
-                      <li><a class="dropdown-item" href="#">Contact Us</a></li>
-                      <li><a class="dropdown-item" href="#">Our Motto</a></li>
-                      <li><a class="dropdown-item" href="#">Terms and Conditons</a></li>
+                      <li><a class="dropdown-item" href="#">View All Drivers</a></li>
+                      <li><a class="dropdown-item" href="#">Add Driver</a></li>
+                      <li><a class="dropdown-item" href="#">Remove Driver</a></li>
                     </ul>
                   </li>
                   <li id="logoutBtn" class="nav-item">
-                    <a class="nav-link fa fa-power-off" href="/login">&nbsp;Log Out</a>
+                    <a class="nav-link fa fa-power-off" href="/AdminLogin">&nbsp;Log Out</a>
                   </li>
                 </ul>
               </div>
@@ -58,6 +65,56 @@
           </nav>
         {% block content %}
         {% endblock %}
+
+<h1 class="title2">What working with GST means for you?</h1>
+<div class="row" id="container2">
+  <div class="col-3 offset-0 container2-items container2-items1">
+    <img src ="{{url_for('static',filename='images/login1.jpg')}}">
+  <h3 class="text-center">The Perfect Ride</h3><p class="text-center">The way to get through your everyday travel needs. Our Intercity taxis are available 24/7 and 
+  you can book and travel in an instant. With rides starting from as low as Rs. 10/km, you can choose 
+  from a wide range of options! 
+  </p>
+</div>
+
+<div class="col-3 offset-1 container2-items">
+  <img src ="{{url_for('static',filename='images/login2.jpg')}}">
+  <h3 class="text-center">Cabs for Every Pocket</h3><p class="text-center">
+From HatchBacks and Sedans to SUVs for special occasions, we have cabs to suit every pocket.<br>
+Now go cashless and travel easy. 
+Simply scan the QR code in the Cabs for easy UPI payments.</p>
+</div>
+
+<div class="col-3 offset-1 container2-items">            
+  <img src ="{{url_for('static',filename='images/login3.jpg')}}">
+  <h3 class="text-center">Secure and Safer Rides</h3>
+  <p class="text-center">Verified drivers and an emergency alert button ,are some of the features 
+  that we have in place to ensure you a safe travel experience.<br>A dedicated 24x7 customer
+  support team always at your service to help solve any problem</p>
+</div>
+</div>
+
+
+
+<div class="row" id="container2">
+  <div class="col-2"></div>
+  <div class="col-3 container2-items container2-items1">
+    <img src ="{{url_for('static',filename='images/login1.jpg')}}">
+  <h3 class="text-center">The Perfect Ride</h3><p class="text-center">The way to get through your everyday travel needs. Our Intercity taxis are available 24/7 and 
+  you can book and travel in an instant. With rides starting from as low as Rs. 10/km, you can choose 
+  from a wide range of options! 
+  </p>
+</div>
+
+
+<div class="col-3 offset-1 container2-items">            
+  <img src ="{{url_for('static',filename='images/login3.jpg')}}">
+  <h3 class="text-center">Secure and Safer Rides</h3>
+  <p class="text-center">Verified drivers and an emergency alert button ,are some of the features 
+  that we have in place to ensure you a safe travel experience.<br>A dedicated 24x7 customer
+  support team always at your service to help solve any problem</p>
+</div>
+</div>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
          crossorigin="anonymous"></script>
@@ -71,10 +128,11 @@
           <h5 class="footerTitle">Go to Section...</h5>
           <ul class="nav flex-column">
             <li class="nav-item mb-2"><a href="/CreateAccount" class="nav-link p-0">Home</a></li>
-            <li class="nav-item mb-2"><a href="/AdminLogin" class="nav-link p-0">Book Now</a></li>
-            <li class="nav-item mb-2"><a href="/AdminLogin" class="nav-link p-0">My Booking</a></li>
-            <li class="nav-item mb-2"><a href="/AdminLogin" class="nav-link p-0">Change Password</a></li>
-            <li class="nav-item mb-2"><a href="/AdminLogin" class="nav-link p-0">Edit Profile</a>Edit Profile</li>
+            <li class="nav-item mb-2"><a href="/AdminLogin" class="nav-link p-0">Add Admin</a></li>
+            <li class="nav-item mb-2"><a href="/AdminLogin" class="nav-link p-0">Add Drivers</a></li>
+            <li class="nav-item mb-2"><a href="/AdminLogin" class="nav-link p-0">Add Routes</a></li>
+            <li class="nav-item mb-2"><a href="/AdminLogin" class="nav-link p-0">Edit Profile</a></li>
+            <li class="nav-item mb-2"><a href="/AdminLogin" class="nav-link p-0">Chnage Password</a></li>
           </ul>
         </div>
 
@@ -117,6 +175,13 @@
     .nav-link:hover, .nav-link:focus{color: #4285F4 !important;}
     .nav-item .active{color:#4285F4 !important;font-weight: 600; font-size: 1.1em;}
     #logoutBtn{margin-top: 5px;position: absolute;right: 50px;}
-    #logoutBtn A:hover{color: rgba(255, 0, 0, 0.582) !important}
+    #logoutBtn a{color: rgba(255, 0, 0, 0.774) }
+    #container2{margin-top: 50px;}
+  .container2-items img {margin-bottom: 20px; border-radius: 20px; margin-left: -10px; margin-top: 0px; border-bottom: 5px #4285F4 solid}
+  .container2-items{background-color: #21252963; color: black; border-radius: 20px; font-weight: 500;}
+  .container2-items1{background-color: #21252963; color: black; border-radius: 20px; margin-left: 65px;}
+  .title2{color: white;font-weight: 700;margin-left: -50px;background-color: #3268c0;padding-top: 20px;
+     padding-left: 10%;border-top-right-radius: 50px;border-bottom-right-radius: 50px; width: 80%;height: 100px;
+     border: 2px #212529 solid; border-left: 0px;margin-bottom: 60px;margin-top: 50px; font-size: 3em;font-style: italic;} 
 </style>
 </html>

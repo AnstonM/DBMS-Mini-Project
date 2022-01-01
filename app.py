@@ -1,8 +1,6 @@
 from flask import *
 import sqlite3
 import os
-
-
 from forms import *
 
 
@@ -46,6 +44,31 @@ def CreateAccount():
         con.close()
         return redirect(url_for('login'))
     return render_template('AccountCreate.html',form=form)
+
+@app.route('/AddAdmin', methods=("GET","POST"))
+def AddAdmin():
+    global userid
+    form = CreateCustomerForm()
+    if form.validate_on_submit():
+        f = request.form
+        name = f['firstname']+' '+f['lastname']
+        phone = f['phone']
+        if phone == '':
+            phone = 'NULL'
+        email = f['email']
+        if email == '':
+            email = 'NULL'
+        username = f['username']
+        password = f['password']
+        confirmpassword = f['confirmpassword']
+        con = sqlite3.connect("DBMS.db")
+        cur = con.cursor()
+        query = "INSERT INTO CUSTOMER(USERNAME,PWD,NAME,PH_NO,EMAIL) VALUES('"+username+"','"+password+"','"+name+"','"+phone+"','"+email+"')"
+        cur.execute(query)
+        con.commit()
+        con.close()
+        return redirect(url_for('Adminindex'))
+    return render_template('AddAdmin.html',form=form)
 
 @app.route('/')
 @app.route('/login', methods=("GET","POST"))
