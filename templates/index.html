@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
+<script>
+  classes = document.querySelector("#homeBtn").className;
+  classes += " active";
+  document.querySelector("#homeBtn").className = classes;
+</script>
 
   
 {% with messages = get_flashed_messages() %}  
@@ -81,20 +86,19 @@ Simply scan the QR code in the Cabs for easy UPI payments.</p>
 <div class="row" id="container2">
   <div class="col-2"></div>
   <div class="col-3 container2-items container2-items1">
-    <img src ="{{url_for('static',filename='images/login1.jpg')}}">
-  <h3 class="text-center">The Perfect Ride</h3><p class="text-center">The way to get through your everyday travel needs. Our Intercity taxis are available 24/7 and 
-  you can book and travel in an instant. With rides starting from as low as Rs. 10/km, you can choose 
-  from a wide range of options! 
+    <img src ="{{url_for('static',filename='images/login5.jpg')}}">
+  <h3 class="text-center">Your Safety First</h3><p class="text-center">Keep your loved ones informed about your travel routes or call emergency services when in need. 
+    All our driver-partners are background verified and trained to deliver only the best experience
   </p>
 </div>
 
 
 <div class="col-3 offset-1 container2-items">            
-  <img src ="{{url_for('static',filename='images/login3.jpg')}}">
-  <h3 class="text-center">Secure and Safer Rides</h3>
-  <p class="text-center">Verified drivers and an emergency alert button ,are some of the features 
-  that we have in place to ensure you a safe travel experience.<br>A dedicated 24x7 customer
-  support team always at your service to help solve any problem</p>
+  <img src ="{{url_for('static',filename='images/login4.jpg')}}">
+  <h3 class="text-center">In Cab Entertainment</h3>
+  <p class="text-center">Play music, watch videos and a lot more with GST Play! Also stay connected even if you are travelling through poor network areas with our free wifi facility.
+
+  </p>
 </div>
 </div>
 
