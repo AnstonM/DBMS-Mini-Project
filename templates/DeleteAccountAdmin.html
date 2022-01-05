@@ -1,5 +1,15 @@
-{% extends "base.html" %}
+{% extends "AdminBase.html" %}
 
+{% block navbar %}
+<ul class="navbar-nav">
+  <li class="nav-item">
+    <a class="nav-link" id="Create" aria-current="page" href="/AdminLogin">Admin Login</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="Admin" href="/Adminindex">Back</a>
+  </li> 
+</ul> 
+{% endblock %}
 
 {% block content %}
 <script>
@@ -9,122 +19,27 @@
 </script>
 <div class="row" id="mainContainer">
   <div class="col-4">
-    <h2 class="title"> EDIT YOUR PROFILE </h2>
-    <form action="{{ url_for('EditProfile') }}" method="POST" autocomplete="off" >
-    {{ form.csrf_token }} 
-
-    <fieldset class="form-field">
-      {{ form.username.label }}<span>,</span>&ensp;{{ form.username }}        
-      {% if form.username.errors %}
-      {% for error in form.username.errors %}
-            <div class="errors">&nbsp;{{ error }}</div>
-            <style>
-              #username{border:2px red solid;}
-              .errors{color: rgba(255, 0, 0, 0.781);}
-            </style> 
-          {% endfor %}
-      {% endif %}
-      </fieldset>  
+    <h3 class="title"> Are you sure, you want to delete your account ? </h3>  
 
     <div class="row" id="formDiv">
-      <div class="col-6">
-        
-
-          <br>
-
-        <fieldset class="form-field">
-          {{ form.firstname.label }}<font color = red>*</font><br>
-          {{ form.firstname }}         
-          {% if form.firstname.errors %}
-          {% for error in form.firstname.errors %}
-          <div class="errors">&nbsp;{{ error }}</div>
-          <style>
-            #firstname{border:2px red solid;}
-            .errors{color: rgba(255, 0, 0, 0.781);}
-          </style> 
-        {% endfor %}
-          {% endif %}      
-          </fieldset>
-
-          <br>
-
-          <fieldset class="form-field">
-            {{ form.phone.label }}<br>
-            {{ form.phone }}         
-            {% if form.phone.errors %}
-            {% for error in form.phone.errors %}
-            <div class="errors">&nbsp;{{ error }}</div>
-            <style>
-              #phone{border:2px red solid;}
-              .errors{color: rgba(255, 0, 0, 0.781);}
-            </style> 
-          {% endfor %}
-            {% endif %}
-            </fieldset>
-          
-      
-      </div>
-
-      
-
-      <div class="col-5">
-
-      
-
-      <br>
-
-
-
-      <fieldset class="form-field">
-        {{ form.lastname.label }}<font color = red>*</font><br>
-        {{ form.lastname }}         
-        {% if form.lastname.errors %}
-        {% for error in form.lastname.errors %}
-              <div class="errors">&nbsp;{{ error }}</div>
-              <style>
-                #lastname{border:2px red solid;}
-                .errors{color: rgba(255, 0, 0, 0.781);}
-              </style> 
-            {% endfor %}
-        {% endif %}
-        </fieldset>
-         
-            <br>
-
-            <fieldset class="form-field">
-              {{ form.email.label }}<br>
-              {{ form.email }}         
-              {% if form.email.errors %}
-              {% for error in form.email.errors %}
-            <div class="errors">&nbsp;{{ error }}</div>
-            <style>
-              #email{border:2px red solid;}
-              .errors{color: rgba(255, 0, 0, 0.781);}
-            </style> 
-          {% endfor %}
-              {% endif %}
-              </fieldset>
-
-
-      
-
-
-      <br><br>      
-      </div>
-      {{ form.submit }}
+        <form method="get" action="/Adminindex">
+            <button id = "submit" type="submit">NO,Take me Back !!</button>
+        </form>
+        <form method="get" action="/DeleteAdmin">
+            <button id = "submit" type="submit">YES, I QUit !!</button>
+        </form>
     </div>
-  </form>
   </div> 
   <div id="carouselFade" class="col-4 carousel slide carousel-fade" data-bs-ride="carousel"  >
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="{{url_for('static',filename='images/banner2.jpg')}}" class="d-block w-100" height="400px" >
+        <img src="{{url_for('static',filename='images/banner4.jpg')}}" class="d-block w-100" height="400px" >
       </div>
       <div class="carousel-item">
-        <img src="{{url_for('static',filename='images/banner3.jpg')}}" class="d-block w-100" height="400px">
+        <img src="{{url_for('static',filename='images/banner5.jpg')}}" class="d-block w-100" height="400px">
       </div>
       <div class="carousel-item">
-        <img src="{{url_for('static',filename='images/banner1.jpg')}}" class="d-block w-100" height="400px">
+        <img src="{{url_for('static',filename='images/banner6.jpg')}}" class="d-block w-100" height="400px">
       </div>
     </div>
   </div> 
@@ -132,26 +47,13 @@
   <div id="carouselFade" class="carousel slide carousel-fade carousel1" data-bs-ride="carousel" >
     <div class="carousel-inner">
       <div class="carousel-item ">
-        <img src="{{url_for('static',filename='images/banner2.jpg')}}" class="d-block w-100" height="400px" >
+        <img src="{{url_for('static',filename='images/banner4.jpg')}}" class="d-block w-100" height="400px" >
       </div>
       <div class="carousel-item active">
-        <img src="{{url_for('static',filename='images/banner3.jpg')}}" class="d-block w-100" height="400px">
+        <img src="{{url_for('static',filename='images/banner5.jpg')}}" class="d-block w-100" height="400px">
       </div>
       <div class="carousel-item">
-        <img src="{{url_for('static',filename='images/banner1.jpg')}}" class="d-block w-100" height="400px">
-      </div>
-    </div>
-  </div>  
-  <div id="carouselFade" class="carousel slide carousel-fade carousel2" data-bs-ride="carousel" >
-    <div class="carousel-inner">
-      <div class="carousel-item ">
-        <img src="{{url_for('static',filename='images/banner2.jpg')}}" class="d-block w-100" height="400px" >
-      </div>
-      <div class="carousel-item">
-        <img src="{{url_for('static',filename='images/banner3.jpg')}}" class="d-block w-100" height="400px">
-      </div>
-      <div class="carousel-item active">
-        <img src="{{url_for('static',filename='images/banner1.jpg')}}" class="d-block w-100" height="400px">
+        <img src="{{url_for('static',filename='images/banner6.jpg')}}" class="d-block w-100" height="400px">
       </div>
     </div>
   </div>  
@@ -209,9 +111,10 @@ Simply scan the QR code in the Cabs for easy UPI payments.</p>
   #mainContainer{background-color: #212529;margin-top: 30px; color: white;padding-left: 50px; border-bottom: 10px #4285F4 solid;}
   input{border-radius: 8px;font-size: 1.2em;}
   .title{color: white;font-weight: 700;margin-left: -50px;background-color: #4285F4;padding-top: 10px;
-     padding-left: 120px;border-top-right-radius: 50px;border-bottom-right-radius: 50px; width: 130%;height: 60px;
+     padding-left: 120px;border-top-right-radius: 50px;border-bottom-right-radius: 50px; width: 130%;height: 100px;
      border: 2px white solid; border-left: 0px;margin-bottom: 60px;margin-top: 50px;} 
-  #submit{width: 90%;font-size: 1.2em;font-weight: 600;background-color: #4285F4;color: white;border: 2px white solid; margin-left: 10px; margin-bottom: 50px;}
+  #submit{width: 90%;font-size: 1.2em;font-weight: 600;background-color: #4285F4;color: white;border: 2px white solid;
+     margin-left: 10px; margin-bottom: 50px;border-radius: 20px;text-align: center;}
   #submit:hover{font-size: 1.3em;}
   #show span{font-size: 0.4em !important;}
 

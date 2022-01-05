@@ -264,4 +264,47 @@ class ChangePasswordForm(FlaskForm):
     newpassword = PasswordField('New Password',[DataRequired(),valid_pass])
     confirmpassword = PasswordField('Confirm\nPassword',[DataRequired(),EqualTo('newpassword',message="Password doesn't match")])
     submit = SubmitField(label='CHANGE PASSWORD')
+
+    
+
+class ChangeAdminPasswordForm(FlaskForm):    
+   
+    def validname(form,field):
+        DataList = field.data.split(' ')
+        for i in DataList:
+            if not i.isalpha():
+                raise ValidationError('Name should contain alphabets only !!!') 
+
+    def valid_oldPass(form,field):
+        con = sqlite3.connect("DBMS.db")
+        print("Database successfully opened")
+        cur = con.cursor()
+        cur.execute("Select * from admin")
+        rows = cur.fetchall()
+        count = 0
+        for rowdata in rows: 
+            if rowdata[2]==form.username.data:
+                if rowdata[3]!=field.data:                    
+                    raise ValidationError('Invalid Password !!!')        
+        con.close()
+
+    
+
+    def valid_pass(form,field):
+        count = 0
+        if len(field.data) >= 8:
+            count += 1
+        if not field.data.isalnum() and not field.data.isupper() and not field.data.islower() and not field.data.isdecimal():
+            count += 1
+        if count != 2:
+            raise ValidationError(message='>= 8 characters, must contain \nA-Z or a-Z ,0-9 ,\na special character( !,@,#,$,%,^,&,* )')
+            
+        
+
+    username = StringField('User Name',[DataRequired()],render_kw={"readonly": True})
+    name = StringField('Full Name',[DataRequired(),validname])
+    password = PasswordField('Old Password',[DataRequired(),valid_oldPass])
+    newpassword = PasswordField('New Password',[DataRequired(),valid_pass])
+    confirmpassword = PasswordField('Confirm\nPassword',[DataRequired(),EqualTo('newpassword',message="Password doesn't match")])
+    submit = SubmitField(label='UPDATE PROFILE')
     

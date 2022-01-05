@@ -9,6 +9,11 @@
 {% endblock %}
 
 {% block content %}
+<script>
+  classes = document.querySelector("#addAdminBtn").className;
+  classes += " active";
+  document.querySelector("#addAdminBtn").className = classes;
+</script>
 <div class="container-fluid" id="container1"> 
   <div class="col-6" id="login">
        <h2 class="title">CREATE NEW ADMIN</h2>

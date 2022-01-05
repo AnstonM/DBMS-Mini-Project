@@ -134,7 +134,6 @@ def ChangePassword():
 def Delete():
     con = sqlite3.connect("DBMS.db")
     cur = con.cursor()
-    cur.execute("Select * from admin")
     query = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID = "+str(userid)+";"
     cur.execute(query)
     con.commit()
@@ -146,6 +145,12 @@ def Delete():
 @app.route('/DeleteAccount', methods=("GET","POST"))
 def DeleteAccount():
     return render_template('DeleteAccount.html')
+
+
+
+
+########################################################################################################################
+
 
 
 @app.route('/AddAdmin', methods=("GET","POST"))
@@ -190,6 +195,52 @@ def Adminlogin():
 @app.route('/Adminindex', methods=("GET","POST"))
 def Adminindex():
     return render_template('Adminindex.html',userid=userid)
+
+
+@app.route('/ChangePasswordAdmin', methods=("GET","POST"))
+def ChangePasswordAdmin():
+    global adminid
+    userName = '';Name = ''
+    con = sqlite3.connect("DBMS.db")
+    cur = con.cursor()
+    cur.execute("Select * from admin where admin_id = "+str(adminid))
+    rows = cur.fetchall()
+    for rowdata in rows:
+            userName = rowdata[2]
+            Name = rowdata[1]
+            break
+    con.close()
+    form = ChangeAdminPasswordForm(username = userName,name = Name)
+    if form.validate_on_submit():
+        f = request.form
+        pwd = f['newpassword']
+        newName = f['name']
+        con = sqlite3.connect("DBMS.db")
+        cur = con.cursor()
+        query = "UPDATE ADMIN SET APWD = '"+pwd+"', ANAME ='"+newName+"' WHERE ADMIN_ID = "+str(adminid)+";" 
+        cur.execute(query)
+        con.commit()
+        con.close()
+        flash("Profile/Password Updated Successfully.... ")
+        return redirect(url_for('Adminindex'))
+    return render_template('ChangePasswordAdmin.html',form=form)
+
+@app.route('/DeleteAdmin', methods=("GET","POST"))
+def DeleteAdmin():
+    global adminid
+    con = sqlite3.connect("DBMS.db")
+    cur = con.cursor()
+    query = "DELETE FROM ADMIN WHERE ADMIN_ID = "+str(adminid)+";"
+    cur.execute(query)
+    con.commit()
+    con.close()
+    flash("Admin Account Deleted Successfully, You will be missed !!")
+    form = LoginForm()
+    return render_template('Adminlogin.html',form=form)
+
+@app.route('/DeleteAccountAdmin', methods=("GET","POST"))
+def DeleteAccountAdmin():
+    return render_template('DeleteAccountAdmin.html')
 
 
 

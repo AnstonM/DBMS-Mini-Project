@@ -15,30 +15,29 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
             <div class="container-fluid">
-              <a class="navbar-brand" href="/index"><img src="{{url_for('static',filename='images/logo12.png')}}" align="left" /></a>
+              <a class="navbar-brand" href="/Adminindex"><img src="{{url_for('static',filename='images/logo12.png')}}" align="left" /></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" id="homeBtn" aria-current="page" href="/Adminindex">Home</a>
                   </li>
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" id= "myAccountBtn" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       My Account
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
-                      <li><a class="dropdown-item" href="#">Change Password</a></li>
-                      <li><a class="dropdown-item" href="#">Edit Profile</a></li>
-                      <li><a class="dropdown-item" href="#">Delete Account</a></li>
+                      <li><a class="dropdown-item" href="/ChangePasswordAdmin">Edit Profile / Change Password </a></li>
+                      <li><a class="dropdown-item" href="/DeleteAccountAdmin">Delete Account</a></li>
                     </ul>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/AddAdmin">Add Admins</a>
+                    <a class="nav-link" id="addAdminBtn" href="/AddAdmin">Add Admins</a>
                   </li>
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="manageRoutesBtn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Manage Routes
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
@@ -48,7 +47,7 @@
                     </ul>
                   </li>
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="manageDriversBtn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Manage Drivers
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
@@ -74,6 +73,12 @@
     {% endfor %}  
   {% endif %}  
 {% endwith %} 
+
+<script>
+  var classes = document.querySelector(".nav-link").className;
+  classes = classes.replace(new RegExp("active", "g"), "");
+  document.querySelector(".nav-link").className = classes;
+</script>
         {% block content %}
         {% endblock %}
 
@@ -142,8 +147,7 @@ Simply scan the QR code in the Cabs for easy UPI payments.</p>
             <li class="nav-item mb-2"><a href="/AddAdmin" class="nav-link p-0">Add Admin</a></li>
             <li class="nav-item mb-2"><a href="/Adminindex" class="nav-link p-0">Add Drivers</a></li>
             <li class="nav-item mb-2"><a href="/Adminindex" class="nav-link p-0">Add Routes</a></li>
-            <li class="nav-item mb-2"><a href="/Adminindex" class="nav-link p-0">Edit Profile</a></li>
-            <li class="nav-item mb-2"><a href="/AdminLogin" class="nav-link p-0">Change Password</a></li>
+            <li class="nav-item mb-2"><a href="/ChangePasswordAdmin" class="nav-link p-0">Edit Profile</a></li>
           </ul>
         </div>
 
@@ -194,5 +198,29 @@ Simply scan the QR code in the Cabs for easy UPI payments.</p>
   .title2{color: white;font-weight: 700;margin-left: -50px;background-color: #3268c0;padding-top: 20px;
      padding-left: 10%;border-top-right-radius: 50px;border-bottom-right-radius: 50px; width: 80%;height: 100px;
      border: 2px #212529 solid; border-left: 0px;margin-bottom: 60px;margin-top: 50px; font-size: 3em;font-style: italic;} 
+
+     .alert {
+  padding: 20px;
+  background-color: #4285F4; /* Red */
+  color: white;
+  margin-bottom: 15px;
+}
+
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 32px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: black;
+}
 </style>
 </html>
