@@ -1,0 +1,136 @@
+#bgimg{
+    width: 30px;
+    height: 40px; 
+    margin-top: 70px;
+    position: fixed;
+    padding:0px 0px 0px 0px;
+}
+
+#img{
+    width: 352px;
+    height: 632px; 
+    margin-top: 7px;
+    position: fixed;
+    padding:0px 0px 0px 0px;
+}
+
+#bckbtn{
+    position: fixed;
+    bottom: 40px;
+    right: 40px; 
+    width: 200px;
+    height: 60px;
+    font-size: 24px;
+    font-family: PT Sans;
+}
+
+#img2{
+    width: 100px;
+    height: 80px; 
+    top: 310px;
+    left: 128px;
+    position: fixed;
+    padding:0px 0px 0px 0px;
+
+}
+
+.row {
+    display: flex;
+    font-weight: 500;
+    font-size: 20px;
+        
+  }
+
+  #values{
+    font-weight: 400;
+    font-size: 18px;
+  }
+  
+  .column {
+    flex: 25%;
+  }
+
+.container{
+    border-radius: 50px;
+}
+
+div{
+    display: block;
+}
+#src{
+    position: fixed;
+    top: 450px;
+    left: 148px;
+    font-weight: 100;
+}
+
+#dest{
+    position: fixed;
+    top: 450px;
+    left: 338px;
+    font-weight: 100;
+}
+
+#dname{
+    position: fixed;
+    top: 148px;
+    left: 150px;
+    font-weight: 100;
+
+}
+
+#dph{
+    position: fixed;
+    top: 148px;
+    left: 330px;
+    font-weight: 100;
+
+}
+
+#name{
+    position: fixed;
+    top: 305px;
+    left: 290px;
+    font-weight: 100;
+
+}
+
+#ph{
+    position: fixed;
+    top: 360px;
+    left: 300px;
+    font-weight: 100;
+
+}
+
+#fare{
+    position: fixed;
+    top: 545px;
+    left: 290px;
+    font-weight: 700;
+    font-size: 30px;
+
+}
+
+#reg{
+    position: fixed;
+    top: 208px;
+    left: 240px;
+    font-weight: 100;
+}
+
+
+ body{
+    background-color: #212121;
+    
+} 
+
+
+
+#title{
+    font-size: 30px;
+    font-weight: 500;
+    margin-left: 500px;
+    
+}
+

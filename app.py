@@ -9,6 +9,9 @@ from flask import flash
 app = Flask(__name__) 
 userid = 0
 adminid = 0
+source = ''
+desti = ''
+type = ''
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 
@@ -241,6 +244,103 @@ def DeleteAdmin():
 @app.route('/DeleteAccountAdmin', methods=("GET","POST"))
 def DeleteAccountAdmin():
     return render_template('DeleteAccountAdmin.html')
+
+
+#########################################################################################
+
+
+
+def get_db_connection():
+    conn = sqlite3.connect('DBMS.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+@app.route('/booking')
+def booking():
+    conn = get_db_connection()
+    data = conn.execute("select distinct source from route").fetchall()
+    return render_template('booking.html',data=data)
+
+@app.route("/dest" , methods=['GET', 'POST'])
+def dest():
+    conn1 = get_db_connection()
+    select = request.form.get('comp_select')
+    global source 
+    source = select
+    data1= conn1.execute("select destination from   route where source='"+str(select)+"'").fetchall()
+    return render_template('dest.html',data1=data1,source=source)
+
+def getdesti():
+    if request.method=="POST":
+        dselect = request.form.get('desti')
+    global desti 
+    desti = dselect
+
+@app.route("/other" , methods=['GET', 'POST'])
+def other():
+    dselect = request.form.get('desti')
+    global source,desti 
+    desti = dselect
+    return render_template('other.html',source=source,desti=desti) 
+
+# @app.route("/test" , methods=['GET', 'POST'])
+# def test():
+#     global source,desti,type
+#     return ' src= '+str(source) + 'dest= '+ str(desti)+' type= '+ str(type)
+
+@app.route("/booked" , methods=['GET', 'POST'])
+def sure():
+    busy = False
+    global source,desti,type,userid
+    conn1 = get_db_connection()
+    print(type)
+    dat= conn1.execute("select fare,route_id,distance,time from route where source='"+str(source)+"' and destination='"+str(desti)+"'").fetchall()
+    cad = conn1.execute("select driver_id,reg_no from cab where type='"+str(type)+"' and Avail='Yes'").fetchall()
+    if cad==None:
+        return render_template('sure.html')
+    else:
+        for j in dat:
+            fare = j[0]
+            rid = j[1]
+            d = j[2]
+            t = j[3]
+        for j in cad:
+            did = j[0]
+            reg = j[1]
+        try:    
+            sql = """INSERT INTO Booking (route_id,customer_id,reg_no,driver_id,total_fare) VALUES('{}','{}','{}','{}','{}');""".format(int(rid),int(userid),str(reg),int(did),float(fare))
+            print(rid,reg,did,fare)
+        except:
+            print('er')
+            flash("No Booking found !!!!")
+            return render_template('index.html')
+        conn1.execute(sql)
+        conn1.commit()
+        udat = conn1.execute("select name,ph_no from customer where customer_id ="+str(userid))
+        ddat = conn1.execute("select dname,dph_no from driver where driver_id ="+str(did))
+        rdat = conn1.execute("select reg_no from cab where driver_id="+str(did)+" and avail='Yes'")
+        return render_template('booked.html',source=source,desti=desti,type=type,dat=dat,cad=cad,d=d,t=t,ddat=ddat,rdat=rdat,redat=dat,udat=udat)   
+    
+
+@app.route("/loading" , methods=['GET', 'POST'])
+def loading():
+    t = request.form.get("type")
+    global source,desti,type
+    type = t
+    return render_template('loading.html',source=source,desti=desti), {"Refresh": "4; url=booked"}
+
+@app.route("/deletebooking" , methods=['GET', 'POST'])
+def deletebooking():
+    global userid
+    conn1 = get_db_connection()
+    bklist = conn1.execute('select booking_id from booking where customer_id='+str(userid)).fetchall()
+    for i in bklist:
+        conn1.execute('Delete from booking where booking_id='+str(i))
+        conn1.commit()
+    flash("Booking Cancelled!")
+    return render_template('index.html')
+
 
 
 
