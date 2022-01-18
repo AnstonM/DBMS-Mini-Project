@@ -12,6 +12,7 @@ adminid = 0
 source = ''
 desti = ''
 type = ''
+driverData = []
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 
@@ -173,7 +174,7 @@ def AddAdmin():
         con.close()
         flash("New Admin added successfully....")
         return redirect(url_for('Adminindex'))
-    return render_template('AddAdmin.html',form=form)
+    return render_template('AddAdmin.html',form=form,adminid=adminid)
 
 @app.route('/AdminLogin', methods=("GET","POST"))
 def Adminlogin():
@@ -193,11 +194,11 @@ def Adminlogin():
         flash("Successfully Logged In")
         return redirect(url_for('Adminindex')) 
     else:       
-        return render_template('Adminlogin.html',form=form)
+        return render_template('Adminlogin.html',form=form,adminid=adminid)
     
 @app.route('/Adminindex', methods=("GET","POST"))
 def Adminindex():
-    return render_template('Adminindex.html',userid=userid)
+    return render_template('Adminindex.html',userid=userid,adminid=adminid)
 
 
 @app.route('/ChangePasswordAdmin', methods=("GET","POST"))
@@ -226,7 +227,7 @@ def ChangePasswordAdmin():
         con.close()
         flash("Profile/Password Updated Successfully.... ")
         return redirect(url_for('Adminindex'))
-    return render_template('ChangePasswordAdmin.html',form=form)
+    return render_template('ChangePasswordAdmin.html',form=form,adminid=adminid)
 
 @app.route('/DeleteAdmin', methods=("GET","POST"))
 def DeleteAdmin():
@@ -239,11 +240,62 @@ def DeleteAdmin():
     con.close()
     flash("Admin Account Deleted Successfully, You will be missed !!")
     form = LoginForm()
-    return render_template('Adminlogin.html',form=form)
+    return render_template('Adminlogin.html',form=form,adminid=adminid)
+
+@app.route('/ViewDrivers',methods=("GET","POST"))
+def ViewDrivers():
+    con = sqlite3.connect("DBMS.db")
+    cur = con.cursor()
+    query = "SELECT * FROM DRIVER ORDER BY DRIVER_ID"
+    cur.execute(query)
+    rows = cur.fetchall()
+    con.close()
+    return render_template('ViewDrivers.html',adminid=adminid,rows=rows)
+
+@app.route('/ReplaceDriver', methods=("GET","POST"))
+def ReplaceDriver():
+    con = sqlite3.connect("DBMS.db")
+    cur = con.cursor()
+    query = "SELECT * FROM DRIVER ORDER BY DRIVER_ID"
+    cur.execute(query)
+    rows = cur.fetchall()
+    con.close()
+    form = ReplaceDriverForm();
+    if form.validate_on_submit():
+        f = request.form
+        driverData.append(f['driverId'])
+        driverData.append(f['name'])
+        driverData.append(f['DL_no'])
+        driverData.append(f['dph_no'])
+        driverData.append(f['age'])
+        return render_template('ReplaceConfirm.html',adminid=adminid,row=driverData)        
+    return render_template('ReplaceDriver.html',adminid=adminid,rows=rows,form=form)
+
+@app.route('/FinalReplace', methods=("GET","POST"))
+def FinalReplace():
+    global adminid
+    con = sqlite3.connect("DBMS.db")
+    cur = con.cursor()
+    query = "DELETE FROM DRIVER WHERE DRIVER_ID = "+str(driverData[0])+";"
+    cur.execute(query)
+    con.commit()
+    query = "INSERT INTO DRIVER VALUES ("+driverData[0]+",'"+driverData[1]+"','"+driverData[2]+"',"+driverData[3]+","+driverData[4]+");"
+    cur.execute(query)
+    con.commit()
+    con.close()
+    flash("Driver successfully Replaced !!!")
+
+    con = sqlite3.connect("DBMS.db")
+    cur = con.cursor()
+    query = "SELECT * FROM DRIVER ORDER BY DRIVER_ID"
+    cur.execute(query)
+    rows = cur.fetchall()
+    con.close()
+    return render_template('ViewDrivers.html',adminid=adminid,rows=rows)
 
 @app.route('/DeleteAccountAdmin', methods=("GET","POST"))
 def DeleteAccountAdmin():
-    return render_template('DeleteAccountAdmin.html')
+    return render_template('DeleteAccountAdmin.html',adminid=adminid)
 
 
 #########################################################################################

@@ -30,30 +30,21 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
                       <li><a class="dropdown-item" href="/ChangePasswordAdmin">Edit Profile / Change Password </a></li>
+                      {% if adminid != 101 %}
                       <li><a class="dropdown-item" href="/DeleteAccountAdmin">Delete Account</a></li>
+                      {% endif %}
                     </ul>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="addAdminBtn" href="/AddAdmin">Add Admins</a>
                   </li>
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="manageRoutesBtn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Manage Routes
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
-                      <li><a class="dropdown-item" href="#">View All Routes</a></li>
-                      <li><a class="dropdown-item" href="#">Add Routes</a></li>
-                      <li><a class="dropdown-item" href="#">Remove Routes</a></li>
-                    </ul>
-                  </li>
-                  <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="manageDriversBtn" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Manage Drivers
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
-                      <li><a class="dropdown-item" href="#">View All Drivers</a></li>
-                      <li><a class="dropdown-item" href="#">Add Driver</a></li>
-                      <li><a class="dropdown-item" href="#">Remove Driver</a></li>
+                      <li><a class="dropdown-item" href="/ViewDrivers">View All Drivers</a></li>
+                      <li><a class="dropdown-item" href="/ReplaceDriver">Replace Drivers</a></li>
                     </ul>
                   </li>
                   <li id="logoutBtn" class="nav-item">
@@ -145,8 +136,7 @@ Simply scan the QR code in the Cabs for easy UPI payments.</p>
           <ul class="nav flex-column">
             <li class="nav-item mb-2"><a href="/Adminindex" class="nav-link p-0">Home</a></li>
             <li class="nav-item mb-2"><a href="/AddAdmin" class="nav-link p-0">Add Admin</a></li>
-            <li class="nav-item mb-2"><a href="/Adminindex" class="nav-link p-0">Add Drivers</a></li>
-            <li class="nav-item mb-2"><a href="/Adminindex" class="nav-link p-0">Add Routes</a></li>
+            <li class="nav-item mb-2"><a href="/ReplaceDriver" class="nav-link p-0">Replace Drivers</a></li>
             <li class="nav-item mb-2"><a href="/ChangePasswordAdmin" class="nav-link p-0">Edit Profile</a></li>
           </ul>
         </div>

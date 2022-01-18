@@ -5,6 +5,8 @@ from wtforms.validators import email_validator
 import sqlite3
 import re
 
+driverList = [(101,101),(102,102),(103,103),(104,104),(105,105),(106,106),(107,107),(108,108)]
+
 class LoginForm(FlaskForm):
 
     def user_in(form,field):
@@ -307,4 +309,34 @@ class ChangeAdminPasswordForm(FlaskForm):
     newpassword = PasswordField('New Password',[DataRequired(),valid_pass])
     confirmpassword = PasswordField('Confirm\nPassword',[DataRequired(),EqualTo('newpassword',message="Password doesn't match")])
     submit = SubmitField(label='UPDATE PROFILE')
+
+
+
+class ReplaceDriverForm(FlaskForm):
+
+    def validname(form,field):
+        DataList = field.data.split(' ')
+        for i in DataList:
+            if not i.isalpha():
+                raise ValidationError('Name should contain alphabets only !!!')
     
+    def validDL(form,field):
+        if not field.data.isupper() or not field.data.isalnum() or field.data.isdecimal() or field.data.isalpha():
+            raise ValidationError("Invalid License Number !!!") 
+
+    def valid_phone(form,field):
+        if len(field.data) != 10:
+            raise ValidationError(message='Invalid Phone Number !!!')
+        elif not field.data.isdecimal():
+            raise ValidationError(message='Invalid Phone Number !!!')
+
+    def validAge(form,field):
+        if field.data < 18 or field.data >70:
+            raise ValidationError("Age should be between 20 and 70 years")
+    
+    driverId = SelectField('Driver ID of the Driver to be Replaced:',[DataRequired()],choices=driverList)
+    name = StringField("Driver Name : ",[DataRequired(),validname])
+    DL_no = StringField("Driving License No. :",[DataRequired(),validDL])
+    dph_no = StringField("Phone Number : ",[DataRequired(),valid_phone])
+    age = IntegerField("Driver's Age : ",[DataRequired(),validAge]) 
+    submit = SubmitField(label='REPLACE DRIVER')
