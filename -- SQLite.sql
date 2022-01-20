@@ -76,6 +76,7 @@ INSERT INTO cab VALUES('SUV',107,'KA38N2910','Yes');
 
 create table Booking(
 booking_id INTEGER PRIMARY KEY AUTOINCREMENT,
+customer_id references customer(customer_id) on DELETE CASCADE,
 route_id REFERENCES route(route_id),
 reg_no REFERENCES Cab(reg_no),
 driver_id REFERENCES CAB(driver_id),
@@ -87,3 +88,5 @@ INSERT INTO Booking (route_id,reg_no,driver_id,total_fare) VALUES(2,'KA38N2910',
 DELETE FROM Booking where booking_id = 55
 
 DELETE FROM booking where 1<2
+
+Drop table booking

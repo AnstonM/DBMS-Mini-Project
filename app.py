@@ -291,7 +291,7 @@ def FinalReplace():
     cur.execute(query)
     rows = cur.fetchall()
     con.close()
-    return render_template('ViewDrivers.html',adminid=adminid,rows=rows)
+    return redirect(url_for('ViewDrivers'))
 
 @app.route('/DeleteAccountAdmin', methods=("GET","POST"))
 def DeleteAccountAdmin():

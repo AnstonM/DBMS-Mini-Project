@@ -36,7 +36,7 @@
       <fieldset class="form-field">
         {{ form.password.label }}<br>
         {{ form.password }}<br>
-        <input id="show" type="checkbox" onclick="myFunction()"><span>&nbsp;&nbsp;Show Password</span>
+        <input id="show" type="checkbox" onclick="myFunction()"><label for="show">&nbsp;&nbsp;Show Password</label>
         {% if form.password.errors%}
           {% for error in form.password.errors %}
             <div class="errors">&nbsp;{{ error }}</div>

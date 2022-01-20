@@ -74,7 +74,7 @@
       {{ form.confirmpassword.label }}<font color = red>*</font><br>
       {{ form.confirmpassword }} 
       <br>
-      <input id="show" type="checkbox" onclick="myFunction()"><span>&nbsp;&nbsp;Show Password</span>        
+      <input id="show" type="checkbox" onclick="myFunction()"><label for="show">&nbsp;&nbsp;Show Password</label>        
       {% if form.confirmpassword.errors %}
       {% for error in form.confirmpassword.errors %}
             <div class="errors">&nbsp;{{ error }}</div>
