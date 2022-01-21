@@ -9,13 +9,13 @@
 #img{
     width: 352px;
     height: 632px; 
-    margin-top: 7px;
-    position: fixed;
-    padding:0px 0px 0px 0px;
+    margin: 3%;
+    position: relative;
+    float: left;
 }
 
 #bckbtn{
-    position: fixed;
+    position: absolute;
     bottom: 40px;
     right: 40px; 
     width: 200px;
@@ -27,9 +27,9 @@
 #img2{
     width: 100px;
     height: 80px; 
-    top: 310px;
-    left: 128px;
-    position: fixed;
+    top: 340px;
+    left: 159px;
+    position: absolute;
     padding:0px 0px 0px 0px;
 
 }
@@ -58,64 +58,64 @@ div{
     display: block;
 }
 #src{
-    position: fixed;
-    top: 450px;
-    left: 148px;
+    position: absolute;
+    top: 485px;
+    left: 180px;
     font-weight: 100;
 }
 
 #dest{
-    position: fixed;
-    top: 450px;
-    left: 338px;
+    position: absolute;
+    top: 485px;
+    left: 363px;
     font-weight: 100;
 }
 
 #dname{
-    position: fixed;
-    top: 148px;
-    left: 150px;
+    position: absolute;
+    top: 182px;
+    left: 177px;
     font-weight: 100;
 
 }
 
 #dph{
-    position: fixed;
-    top: 148px;
-    left: 330px;
+    position: absolute;
+    top: 182px;
+    left: 359px;
     font-weight: 100;
 
 }
 
 #name{
-    position: fixed;
-    top: 305px;
-    left: 290px;
+    position: absolute;
+    top: 337px;
+    left: 320px;
     font-weight: 100;
 
 }
 
 #ph{
-    position: fixed;
-    top: 360px;
-    left: 300px;
+    position: absolute;
+    top: 395px;
+    left: 330px;
     font-weight: 100;
 
 }
 
 #fare{
-    position: fixed;
-    top: 545px;
-    left: 290px;
+    position: absolute;
+    top: 570px;
+    left: 310px;
     font-weight: 700;
     font-size: 30px;
 
 }
 
 #reg{
-    position: fixed;
-    top: 208px;
-    left: 240px;
+    position: absolute;
+    top: 240px;
+    left: 270px;
     font-weight: 100;
 }
 

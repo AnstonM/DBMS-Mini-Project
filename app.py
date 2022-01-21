@@ -1,3 +1,4 @@
+
 from flask import *
 import sqlite3
 import os
@@ -15,12 +16,21 @@ type = ''
 driverData = []
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
+booked = False
 
 
 
 @app.route('/index', methods=("GET","POST"))
 def index():
+    global booked
     print('index opened')
+    conn = get_db_connection()
+    book = conn.execute("select count(*) from booking where customer_id='"+str(userid)+"'")
+    for i in book:
+        if i[0] == 1:
+            booked = True
+        else:
+            booked = False
     return render_template('index.html',userid=userid)
 
 @app.route('/CreateAccount', methods=("GET","POST"))
@@ -279,12 +289,12 @@ def FinalReplace():
     query = "DELETE FROM DRIVER WHERE DRIVER_ID = "+str(driverData[0])+";"
     cur.execute(query)
     con.commit()
-    query = "INSERT INTO DRIVER VALUES ("+driverData[0]+",'"+driverData[1]+"','"+driverData[2]+"',"+driverData[3]+","+driverData[4]+");"
+    query = "INSERT INTO DRIVER VALUES ("+driverData[0]+",'"+driverData[1]+"','"+driverData[2]+"',"+driverData[3]+","+driverData[4]+","+str(adminid)+");"
     cur.execute(query)
     con.commit()
     con.close()
     flash("Driver successfully Replaced !!!")
-
+    
     con = sqlite3.connect("DBMS.db")
     cur = con.cursor()
     query = "SELECT * FROM DRIVER ORDER BY DRIVER_ID"
@@ -293,9 +303,12 @@ def FinalReplace():
     con.close()
     return redirect(url_for('ViewDrivers'))
 
+
+
+
 @app.route('/DeleteAccountAdmin', methods=("GET","POST"))
 def DeleteAccountAdmin():
-    return render_template('DeleteAccountAdmin.html',adminid=adminid)
+    return render_template('DeleteAccountAdmin.html')
 
 
 #########################################################################################
@@ -310,9 +323,14 @@ def get_db_connection():
 
 @app.route('/booking')
 def booking():
-    conn = get_db_connection()
-    data = conn.execute("select distinct source from route").fetchall()
-    return render_template('booking.html',data=data)
+    global booked
+    if booked == True:
+        flash("Cab already booked.")
+        return render_template('index.html')
+    else:
+        conn = get_db_connection()
+        data = conn.execute("select distinct source from route").fetchall()
+        return render_template('booking.html',data=data)
 
 @app.route("/dest" , methods=['GET', 'POST'])
 def dest():
@@ -343,7 +361,6 @@ def other():
 
 @app.route("/booked" , methods=['GET', 'POST'])
 def sure():
-    busy = False
     global source,desti,type,userid
     conn1 = get_db_connection()
     print(type)
@@ -360,23 +377,48 @@ def sure():
         for j in cad:
             did = j[0]
             reg = j[1]
-        try:    
-            sql = """INSERT INTO Booking (route_id,customer_id,reg_no,driver_id,total_fare) VALUES('{}','{}','{}','{}','{}');""".format(int(rid),int(userid),str(reg),int(did),float(fare))
-            print(rid,reg,did,fare)
-        except:
-            print('er')
-            flash("No Booking found !!!!")
-            return render_template('index.html')
+        sql = """INSERT INTO Booking (route_id,customer_id,reg_no,driver_id,total_fare) VALUES('{}','{}','{}','{}','{}');""".format(int(rid),int(userid),str(reg),int(did),float(fare))
+        print(rid,reg,did,fare)
         conn1.execute(sql)
         conn1.commit()
+        return redirect(url_for('mybooking'))
+ 
+@app.route("/mybooking" , methods=['GET', 'POST'])     
+def mybooking():
+    global source,desti,userid
+    conn1 = get_db_connection()
+    rcd = conn1.execute("select route_id,customer_id,driver_id from Booking where customer_id='"+str(userid)+"'").fetchall()
+    print('assadasdasdasd',userid)
+    cid = 0
+    for i in rcd:
+        ridd = int(i[0])
+        cid = int(i[1])
+        didd = int(i[2])
+    if cid == 0:
+        flash("No Booking Found.")
+        return render_template('index.html')
+    else:
+        copydat= conn1.execute("select source,destination,fare,route_id,distance,time from route where route_id='"+str(ridd)+"'").fetchall()
+        for cc in copydat:
+            source = cc[0]
+            desti = cc[1]
+            d = cc[4]
+            t = cc[5]
+            
+        dat= conn1.execute("select fare,route_id,distance,time from route where route_id='"+str(ridd)+"'").fetchall()
+        typedat = conn1.execute("select type from cab where driver_id ="+str(didd)).fetchall()
+        for i in typedat:
+            type = i[0]
         udat = conn1.execute("select name,ph_no from customer where customer_id ="+str(userid))
-        ddat = conn1.execute("select dname,dph_no from driver where driver_id ="+str(did))
-        rdat = conn1.execute("select reg_no from cab where driver_id="+str(did)+" and avail='Yes'")
-        return render_template('booked.html',source=source,desti=desti,type=type,dat=dat,cad=cad,d=d,t=t,ddat=ddat,rdat=rdat,redat=dat,udat=udat)   
-    
+        ddat = conn1.execute("select dname,dph_no from driver where driver_id ='"+str(didd)+"'")
+        rdat = conn1.execute("select reg_no from cab where driver_id="+str(didd)+" and avail='Yes'")
+        
+        return render_template('booked.html',source=source,desti=desti,type=type,dat=dat,cad=rdat,d=d,t=t,ddat=ddat,rdat=rdat,redat=dat,udat=udat)   
 
 @app.route("/loading" , methods=['GET', 'POST'])
 def loading():
+    global booked 
+    booked = True
     t = request.form.get("type")
     global source,desti,type
     type = t
@@ -384,11 +426,12 @@ def loading():
 
 @app.route("/deletebooking" , methods=['GET', 'POST'])
 def deletebooking():
-    global userid
+    global userid,booked
     conn1 = get_db_connection()
-    bklist = conn1.execute('select booking_id from booking where customer_id='+str(userid)).fetchall()
+    bklist = conn1.execute("select booking_id from booking where customer_id='"+str(userid)+"'").fetchall()
     for i in bklist:
-        conn1.execute('Delete from booking where booking_id='+str(i))
+        conn1.execute('Delete from booking where booking_id='+str(i[0]))
+        booked = False
         conn1.commit()
     flash("Booking Cancelled!")
     return render_template('index.html')

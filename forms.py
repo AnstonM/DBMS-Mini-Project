@@ -309,9 +309,7 @@ class ChangeAdminPasswordForm(FlaskForm):
     newpassword = PasswordField('New Password',[DataRequired(),valid_pass])
     confirmpassword = PasswordField('Confirm\nPassword',[DataRequired(),EqualTo('newpassword',message="Password doesn't match")])
     submit = SubmitField(label='UPDATE PROFILE')
-
-
-
+    
 class ReplaceDriverForm(FlaskForm):
 
     def validname(form,field):

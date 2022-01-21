@@ -10,9 +10,9 @@
     classes += " active";
     document.querySelector("#myBookingBtn").className = classes;
 </script>
-<div class="container"style="background-color: white; ">
+<div class="container"style="background-color: white;padding-bottom:30px; ">
     
-    <img id ="img" src="../static/images/ticket.png">
+   <img id ="img" src="../static/images/ticket.png">
     <img id ="img2" src="../static/images/dp.png">
     
     <div class="row" style="margin-left: 500px;padding-top: 100px;">
@@ -77,7 +77,7 @@
     
 
     <div id = "title" style="font-size: xx-large; margin-top: 60px;"><marquee style="color: #7171e0;" width="700px" direction="right" behavior="alternate">Your Cab has been Booked!</marquee></div><br>
-    <!--<a href="{{ url_for('deletebooking')}}" id="bckbtn" class="btn btn-outline-danger">Cancel Booking</a>-->    
+    <a href="{{ url_for('deletebooking')}}" id="bckbtn" class="btn btn-outline-danger">Cancel Booking</a>    
 </div>
 
 

@@ -33,30 +33,31 @@ driver_id integer PRIMARY KEY,
 Dname varchar2(20) NOT NULL,
 DL_no number(10) UNIQUE NOT NULL,
 dph_no number(10) NOT NULL,
-Age number(2));
+Age number(2),
+admin_id REFERENCES admin(admin_id) DEFAULT 101);
 
 INSERT into driver VALUES(101,'Arman Malik','A4329LF4J49042J',
-9440487109,23);
+9440487109,23,101);
 INSERT into driver VALUES(102,'Rohan Sharma','JF30FO381JD914F',
-89319037495,44);
+89319037495,44,101);
 INSERT into driver
 VALUES(103,'Rahul K','DKW029099EK2KD2',
-9903199103,32);
+9903199103,32,101);
 INSERT into driver
 VALUES(104,'Rajesh Sharma','12J9EO10DL33J4F',
-89109893813,45);
+89109893813,45,101);
 INSERT into driver
 VALUES(105,'Ronit R','A92K2801OE350C3',
-9201113031,45);
+9201113031,45,101);
 INSERT into driver
 VALUES(106,'Raj Kapoor','29DEO10EPC14EKD',
-7718304194,32);
+7718304194,32,101);
 INSERT into driver
 VALUES(107,'Aryan Khan','381LE01EAD9238F',
-9120314451,35);
+9120314451,35,101);
 INSERT into driver
 VALUES(108,'Rohan Joshi','1JD919DN4501PCV',
-9998110384,29);
+9998110384,29,101);
 
 create table cab(
 type varchar2(15) NOT NULL,
@@ -76,7 +77,6 @@ INSERT INTO cab VALUES('SUV',107,'KA38N2910','Yes');
 
 create table Booking(
 booking_id INTEGER PRIMARY KEY AUTOINCREMENT,
-customer_id references customer(customer_id) on DELETE CASCADE,
 route_id REFERENCES route(route_id),
 reg_no REFERENCES Cab(reg_no),
 driver_id REFERENCES CAB(driver_id),
@@ -89,4 +89,14 @@ DELETE FROM Booking where booking_id = 55
 
 DELETE FROM booking where 1<2
 
-Drop table booking
+select route_id,customer_id,driver_id from Booking where customer_id='1427'
+
+select count(*) from booking where customer_id='1427'
+
+select driver_id,reg_no from cab where type='SUV' and Avail='No'
+
+select type from cab where driver_id = 103
+
+alter table driver add admin_id REFERENCES admin(admin_id) on delete set DEFAULT ;
+
+alter table driver add constraint def default '101' for admin_id;
