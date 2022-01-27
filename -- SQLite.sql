@@ -63,17 +63,15 @@ create table cab(
 type varchar2(15) NOT NULL,
 Driver_id REFERENCES driver(driver_id),
 reg_no varchar2(15) NOT NULL,
-Avail varchar2(3) NOT NULL,
-CHECK(Avail in('Yes','No')),
 PRIMARY KEY(Driver_id,reg_no)); 
 
-INSERT INTO cab VALUES('SUV',101,'KA19P1234','Yes');
-INSERT INTO cab VALUES('Sedan',102,'KA19MH1230','Yes');
-INSERT INTO cab VALUES('Minivan',103,'KA03P0089','Yes');
-INSERT INTO cab VALUES('Hatchback',104,'KA01P1345','Yes');
-INSERT INTO cab VALUES('SUV',105,'MH93P1491','Yes');
-INSERT INTO cab VALUES('Sedan',106,'KA29PG314','Yes');
-INSERT INTO cab VALUES('SUV',107,'KA38N2910','Yes');
+INSERT INTO cab VALUES('SUV',101,'KA19P1234');
+INSERT INTO cab VALUES('Sedan',102,'KA19MH1230');
+INSERT INTO cab VALUES('Minivan',103,'KA03P0089');
+INSERT INTO cab VALUES('Hatchback',104,'KA01P1345');
+INSERT INTO cab VALUES('SUV',105,'MH93P1491');
+INSERT INTO cab VALUES('Sedan',106,'KA29PG314');
+INSERT INTO cab VALUES('SUV',107,'KA38N2910');
 
 create table Booking(
 booking_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -100,3 +98,18 @@ select type from cab where driver_id = 103
 alter table driver add admin_id REFERENCES admin(admin_id) on delete set DEFAULT ;
 
 alter table driver add constraint def default '101' for admin_id;
+
+drop table cab;
+
+DROP TABLE CUSTOMER;
+
+create table customer(
+customer_id integer primary key autoincrement,
+username varchar2(20) unique,
+pwd varchar2(20) not null,
+name varchar2(40) not null,
+ph_no number(10),
+email varchar2(40)
+);
+
+INSERT INTO CUSTOMER VALUES (1420,'Flast','1234','First Last','1234567890','Flast@gmail.com');

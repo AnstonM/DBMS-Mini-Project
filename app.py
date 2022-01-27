@@ -365,7 +365,7 @@ def sure():
     conn1 = get_db_connection()
     print(type)
     dat= conn1.execute("select fare,route_id,distance,time from route where source='"+str(source)+"' and destination='"+str(desti)+"'").fetchall()
-    cad = conn1.execute("select driver_id,reg_no from cab where type='"+str(type)+"' and Avail='Yes'").fetchall()
+    cad = conn1.execute("select driver_id,reg_no from cab where type='"+str(type)+"'").fetchall()
     if cad==None:
         return render_template('sure.html')
     else:
@@ -411,7 +411,7 @@ def mybooking():
             type = i[0]
         udat = conn1.execute("select name,ph_no from customer where customer_id ="+str(userid))
         ddat = conn1.execute("select dname,dph_no from driver where driver_id ='"+str(didd)+"'")
-        rdat = conn1.execute("select reg_no from cab where driver_id="+str(didd)+" and avail='Yes'")
+        rdat = conn1.execute("select reg_no from cab where driver_id="+str(didd))
         
         return render_template('booked.html',source=source,desti=desti,type=type,dat=dat,cad=rdat,d=d,t=t,ddat=ddat,rdat=rdat,redat=dat,udat=udat)   
 
