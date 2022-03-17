@@ -376,7 +376,11 @@ class ChangeStatusForm(FlaskForm):
                 raise ValidationError("Cant change a COMPLETED booking to CANCELLED status!!")
             elif i[0]=='CANCELLED' and field.data=='COMPLETED':
                 raise ValidationError("Cant change a CANCELLED booking to COMPLETED status!!")
-        
+            elif field.data=='ACTIVE':
+                cur.execute("SELECT COUNT(*) FROM BOOKING WHERE CUSTOMER_ID IN (SELECT CUSTOMER_ID FROM BOOKING WHERE BOOKING_ID="+str(form.bookingId.data)+") AND STATUS='ACTIVE'")
+                num = cur.fetchone()
+                if num[0] == 1:
+                    raise ValidationError("A Customer cant have more than 1 ACTIVE booking")
     
     statusOpt = SelectField('Change Status to :',[DataRequired(),validoption],choices=statOptions)
     bookingId = StringField("Booking ID : ",[DataRequired(),validBookingID]) 

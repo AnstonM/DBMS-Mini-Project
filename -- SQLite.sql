@@ -77,6 +77,7 @@ drop table Booking;
 
 create table Booking(
 booking_id INTEGER PRIMARY KEY AUTOINCREMENT,
+customer_id REFERENCES customer(customer_id),
 route_id REFERENCES route(route_id),
 reg_no REFERENCES Cab(reg_no),
 driver_id REFERENCES CAB(driver_id),

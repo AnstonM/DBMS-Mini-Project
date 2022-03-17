@@ -158,6 +158,30 @@ def Delete():
     form = LoginForm()
     return render_template('login.html',form=form)
 
+
+@app.route('/mybookinghistory',methods=("GET","POST"))
+def mybookinghistory():
+    con = sqlite3.connect("DBMS.db")
+    cur = con.cursor()
+    query = "SELECT * FROM BOOKING ORDER BY BOOKING_ID"
+    cur.execute(query)
+    rows = cur.fetchall()
+    row2 = []
+    for i in rows:
+        row3 = []
+        for j in range(len(i)):
+            row3.append(i[j])
+        row2.append(row3)
+    if len(rows)==0:
+        flash("No Bookings Founds !!!")
+        return render_template('index.html',userid=userid)
+    for i in row2:
+        cur.execute("select source,destination from route where route_id="+str(i[2]))
+        i[2]=cur.fetchone()
+    con.close()
+    return render_template('mybookinghistory.html',userid=userid,rows=row2)
+
+
 @app.route('/DeleteAccount', methods=("GET","POST"))
 def DeleteAccount():
     return render_template('DeleteAccount.html')
@@ -317,11 +341,20 @@ def ViewAll():
     query = "SELECT * FROM BOOKING ORDER BY CUSTOMER_ID"
     cur.execute(query)
     rows = cur.fetchall()
+    row2 = []
+    for i in rows:
+        row3 = []
+        for j in range(len(i)):
+            row3.append(i[j])
+        row2.append(row3)
     if len(rows)==0:
         flash("No Bookings Founds !!!")
-        return render_template('Adminindex.html',userid=userid,adminid=adminid)      
+        return render_template('Adminindex.html',userid=userid,adminid=adminid)
+    for i in row2:
+        cur.execute("select route_id,source,destination from route where route_id="+str(i[2]))
+        i[2]=cur.fetchone()
     con.close()
-    return render_template('ViewAll.html',adminid=adminid,rows=rows)
+    return render_template('ViewAll.html',adminid=adminid,rows=row2)
 
 
 
@@ -332,11 +365,20 @@ def ViewActive():
     query = "SELECT * FROM BOOKING WHERE STATUS='ACTIVE' ORDER BY CUSTOMER_ID"
     cur.execute(query)
     rows = cur.fetchall()
+    row2 = []
+    for i in rows:
+        row3 = []
+        for j in range(len(i)):
+            row3.append(i[j])
+        row2.append(row3)
     if len(rows)==0:
         flash("No Bookings Founds !!!")
-        return render_template('Adminindex.html',userid=userid,adminid=adminid)      
+        return render_template('Adminindex.html',userid=userid,adminid=adminid)
+    for i in row2:
+        cur.execute("select route_id,source,destination from route where route_id="+str(i[2]))
+        i[2]=cur.fetchone()
     con.close()
-    return render_template('ViewActive.html',adminid=adminid,rows=rows)
+    return render_template('ViewActive.html',adminid=adminid,rows=row2)
 
 @app.route('/ViewCancelled',methods=("GET","POST"))
 def ViewCancelled():
@@ -345,11 +387,20 @@ def ViewCancelled():
     query = "SELECT * FROM BOOKING WHERE STATUS='CANCELLED' ORDER BY CUSTOMER_ID"
     cur.execute(query)
     rows = cur.fetchall()
+    row2 = []
+    for i in rows:
+        row3 = []
+        for j in range(len(i)):
+            row3.append(i[j])
+        row2.append(row3)
     if len(rows)==0:
         flash("No Bookings Founds !!!")
-        return render_template('Adminindex.html',userid=userid,adminid=adminid)      
+        return render_template('Adminindex.html',userid=userid,adminid=adminid)
+    for i in row2:
+        cur.execute("select route_id,source,destination from route where route_id="+str(i[2]))
+        i[2]=cur.fetchone()
     con.close()
-    return render_template('ViewCancelled.html',adminid=adminid,rows=rows)
+    return render_template('ViewCancelled.html',adminid=adminid,rows=row2)
 
 @app.route('/ViewCompleted',methods=("GET","POST"))
 def ViewCompleted():
@@ -358,11 +409,20 @@ def ViewCompleted():
     query = "SELECT * FROM BOOKING WHERE STATUS='COMPLETED' ORDER BY CUSTOMER_ID"
     cur.execute(query)
     rows = cur.fetchall()
+    row2 = []
+    for i in rows:
+        row3 = []
+        for j in range(len(i)):
+            row3.append(i[j])
+        row2.append(row3)
     if len(rows)==0:
         flash("No Bookings Founds !!!")
-        return render_template('Adminindex.html',userid=userid,adminid=adminid)      
+        return render_template('Adminindex.html',userid=userid,adminid=adminid)
+    for i in row2:
+        cur.execute("select route_id,source,destination from route where route_id="+str(i[2]))
+        i[2]=cur.fetchone()
     con.close()
-    return render_template('ViewCompleted.html',adminid=adminid,rows=rows)
+    return render_template('ViewCompleted.html',adminid=adminid,rows=row2)
 
 @app.route('/ChangeStatus', methods=("GET","POST"))
 def ChangeStatus():
@@ -390,7 +450,7 @@ def FinalStatus():
     cur.execute(query)
     con.commit()
     con.close()
-    return redirect(url_for('ViewAll'))
+    return redirect(url_for('ChangeStatus'))
 
 
 @app.route('/DeleteAccountAdmin', methods=("GET","POST"))
@@ -511,8 +571,14 @@ def loading():
     type = t
     return render_template('loading.html',source=source,desti=desti), {"Refresh": "4; url=booked"}
 
+
+
 @app.route("/deletebooking" , methods=['GET', 'POST'])
 def deletebooking():
+    return render_template('deletebooking.html')
+
+@app.route("/deleteConfirm" , methods=['GET', 'POST'])
+def deleteConfirm():
     global userid,booked
     conn1 = get_db_connection()
     bklist = conn1.execute("select booking_id from booking where customer_id='"+str(userid)+"' and status='ACTIVE'").fetchall()
@@ -522,9 +588,6 @@ def deletebooking():
         conn1.commit()
     flash("Booking Cancelled!")
     return render_template('index.html')
-
-
-
 
 
 if __name__=='__main__':
