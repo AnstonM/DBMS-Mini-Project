@@ -14,6 +14,8 @@ source = ''
 desti = ''
 type = ''
 driverData = []
+bookingId = 0
+statusOpt = ''
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 booked = False
@@ -25,7 +27,7 @@ def index():
     global booked
     print('index opened')
     conn = get_db_connection()
-    book = conn.execute("select count(*) from booking where customer_id='"+str(userid)+"'")
+    book = conn.execute("select count(*) from booking where customer_id='"+str(userid)+"' and status='ACTIVE'")
     for i in book:
         if i[0] == 1:
             booked = True
@@ -264,6 +266,7 @@ def ViewDrivers():
 
 @app.route('/ReplaceDriver', methods=("GET","POST"))
 def ReplaceDriver():
+    global driverData
     con = sqlite3.connect("DBMS.db")
     cur = con.cursor()
     query = "SELECT * FROM DRIVER ORDER BY DRIVER_ID"
@@ -273,6 +276,7 @@ def ReplaceDriver():
     form = ReplaceDriverForm();
     if form.validate_on_submit():
         f = request.form
+        driverData = []
         driverData.append(f['driverId'])
         driverData.append(f['name'])
         driverData.append(f['DL_no'])
@@ -304,6 +308,89 @@ def FinalReplace():
     return redirect(url_for('ViewDrivers'))
 
 
+
+
+@app.route('/ViewAll',methods=("GET","POST"))
+def ViewAll():
+    con = sqlite3.connect("DBMS.db")
+    cur = con.cursor()
+    query = "SELECT * FROM BOOKING ORDER BY CUSTOMER_ID"
+    cur.execute(query)
+    rows = cur.fetchall()
+    if len(rows)==0:
+        flash("No Bookings Founds !!!")
+        return render_template('Adminindex.html',userid=userid,adminid=adminid)      
+    con.close()
+    return render_template('ViewAll.html',adminid=adminid,rows=rows)
+
+
+
+@app.route('/ViewActive',methods=("GET","POST"))
+def ViewActive():
+    con = sqlite3.connect("DBMS.db")
+    cur = con.cursor()
+    query = "SELECT * FROM BOOKING WHERE STATUS='ACTIVE' ORDER BY CUSTOMER_ID"
+    cur.execute(query)
+    rows = cur.fetchall()
+    if len(rows)==0:
+        flash("No Bookings Founds !!!")
+        return render_template('Adminindex.html',userid=userid,adminid=adminid)      
+    con.close()
+    return render_template('ViewActive.html',adminid=adminid,rows=rows)
+
+@app.route('/ViewCancelled',methods=("GET","POST"))
+def ViewCancelled():
+    con = sqlite3.connect("DBMS.db")
+    cur = con.cursor()
+    query = "SELECT * FROM BOOKING WHERE STATUS='CANCELLED' ORDER BY CUSTOMER_ID"
+    cur.execute(query)
+    rows = cur.fetchall()
+    if len(rows)==0:
+        flash("No Bookings Founds !!!")
+        return render_template('Adminindex.html',userid=userid,adminid=adminid)      
+    con.close()
+    return render_template('ViewCancelled.html',adminid=adminid,rows=rows)
+
+@app.route('/ViewCompleted',methods=("GET","POST"))
+def ViewCompleted():
+    con = sqlite3.connect("DBMS.db")
+    cur = con.cursor()
+    query = "SELECT * FROM BOOKING WHERE STATUS='COMPLETED' ORDER BY CUSTOMER_ID"
+    cur.execute(query)
+    rows = cur.fetchall()
+    if len(rows)==0:
+        flash("No Bookings Founds !!!")
+        return render_template('Adminindex.html',userid=userid,adminid=adminid)      
+    con.close()
+    return render_template('ViewCompleted.html',adminid=adminid,rows=rows)
+
+@app.route('/ChangeStatus', methods=("GET","POST"))
+def ChangeStatus():
+    global bookingId, statusOpt
+    con = sqlite3.connect("DBMS.db")
+    cur = con.cursor()
+    query = "SELECT * FROM BOOKING ORDER BY CUSTOMER_ID"
+    cur.execute(query)
+    rows = cur.fetchall()
+    con.close()
+    form = ChangeStatusForm();
+    if form.validate_on_submit():
+        f = request.form
+        bookingId = f['bookingId']
+        statusOpt = f['statusOpt']
+        return render_template('StatusConfirm.html',adminid=adminid,bookingId=bookingId,statusOpt=statusOpt)        
+    return render_template('ChangeStatus.html',adminid=adminid,rows=rows,form=form)
+
+@app.route('/FinalStatus', methods=("GET","POST"))
+def FinalStatus():
+    global bookingId, statusOpt
+    con = sqlite3.connect("DBMS.db")
+    cur = con.cursor()
+    query = "UPDATE BOOKING SET STATUS='"+statusOpt+"' WHERE BOOKING_ID="+str(bookingId)
+    cur.execute(query)
+    con.commit()
+    con.close()
+    return redirect(url_for('ViewAll'))
 
 
 @app.route('/DeleteAccountAdmin', methods=("GET","POST"))
@@ -387,7 +474,7 @@ def sure():
 def mybooking():
     global source,desti,userid
     conn1 = get_db_connection()
-    rcd = conn1.execute("select route_id,customer_id,driver_id from Booking where customer_id='"+str(userid)+"'").fetchall()
+    rcd = conn1.execute("select route_id,customer_id,driver_id from Booking where customer_id='"+str(userid)+"' and status='ACTIVE'").fetchall()
     print('assadasdasdasd',userid)
     cid = 0
     for i in rcd:
@@ -428,9 +515,9 @@ def loading():
 def deletebooking():
     global userid,booked
     conn1 = get_db_connection()
-    bklist = conn1.execute("select booking_id from booking where customer_id='"+str(userid)+"'").fetchall()
+    bklist = conn1.execute("select booking_id from booking where customer_id='"+str(userid)+"' and status='ACTIVE'").fetchall()
     for i in bklist:
-        conn1.execute('Delete from booking where booking_id='+str(i[0]))
+        conn1.execute("Update booking set status='CANCELLED' where booking_id="+str(i[0]))
         booked = False
         conn1.commit()
     flash("Booking Cancelled!")

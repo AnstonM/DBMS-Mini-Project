@@ -73,12 +73,15 @@ INSERT INTO cab VALUES('SUV',105,'MH93P1491');
 INSERT INTO cab VALUES('Sedan',106,'KA29PG314');
 INSERT INTO cab VALUES('SUV',107,'KA38N2910');
 
+drop table Booking;
+
 create table Booking(
 booking_id INTEGER PRIMARY KEY AUTOINCREMENT,
 route_id REFERENCES route(route_id),
 reg_no REFERENCES Cab(reg_no),
 driver_id REFERENCES CAB(driver_id),
-total_fare number(10,2) not null);
+total_fare number(10,2) not null,
+status varchar2(20) default 'ACTIVE' not null);
 
 
 INSERT INTO Booking (route_id,reg_no,driver_id,total_fare) VALUES(2,'KA38N2910',107,7441.59);

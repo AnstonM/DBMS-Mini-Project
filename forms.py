@@ -338,3 +338,46 @@ class ReplaceDriverForm(FlaskForm):
     dph_no = StringField("Phone Number : ",[DataRequired(),valid_phone])
     age = IntegerField("Driver's Age : ",[DataRequired(),validAge]) 
     submit = SubmitField(label='REPLACE DRIVER')
+
+
+
+class ChangeStatusForm(FlaskForm):
+    
+    statOptions = [('ACTIVE','ACTIVE'),('CANCELLED','CANCELLED'),('COMPLETED','COMPLETED')]
+
+    def validBookingID(form,field):
+        if not field.data.isdecimal():
+            raise ValidationError('Booking ID should be a number!!')
+        con = sqlite3.connect("DBMS.db")
+        print("Database successfully opened")
+        cur = con.cursor()
+        cur.execute("Select * from booking")
+        rows = cur.fetchall()
+        count = 0
+        for rowdata in rows: 
+            if rowdata[0]!=int(field.data):
+                count += 1
+        if count == len(rows):
+            raise ValidationError("Booking ID is Invalid : Not Found")
+
+    def validoption(form,field):
+        con = sqlite3.connect("DBMS.db")
+        print("Database successfully opened")
+        cur = con.cursor()
+        try:
+            cur.execute("Select status from booking where booking_id="+str(form.bookingId.data))
+        except:
+            None
+        rows = cur.fetchall()
+        for i in rows:
+            if i[0]==field.data:
+                raise ValidationError("The Status for BOOKING ID "+str(form.bookingId.data)+" is already : "+field.data)
+            elif i[0]=='COMPLETED' and field.data=='CANCELLED':
+                raise ValidationError("Cant change a COMPLETED booking to CANCELLED status!!")
+            elif i[0]=='CANCELLED' and field.data=='COMPLETED':
+                raise ValidationError("Cant change a CANCELLED booking to COMPLETED status!!")
+        
+    
+    statusOpt = SelectField('Change Status to :',[DataRequired(),validoption],choices=statOptions)
+    bookingId = StringField("Booking ID : ",[DataRequired(),validBookingID]) 
+    submit = SubmitField(label='CHANGE STATUS')
