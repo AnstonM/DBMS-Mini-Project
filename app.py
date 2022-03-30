@@ -161,9 +161,10 @@ def Delete():
 
 @app.route('/mybookinghistory',methods=("GET","POST"))
 def mybookinghistory():
+    global userid
     con = sqlite3.connect("DBMS.db")
     cur = con.cursor()
-    query = "SELECT * FROM BOOKING ORDER BY BOOKING_ID"
+    query = "SELECT * FROM BOOKING WHERE CUSTOMER_ID = "+str(userid) +" ORDER BY BOOKING_ID" 
     cur.execute(query)
     rows = cur.fetchall()
     row2 = []
